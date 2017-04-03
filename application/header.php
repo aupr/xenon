@@ -16,11 +16,11 @@
 
 
 <div style="max-width: 800px; margin: auto; padding-top: 10px;">
-    <a href="/xenon/" class="btn btn-default btn-lg">LunchBD</a>
-    <a href="/xenon/?app=addmember" class="btn btn-warning btn-lg">
+    <a href="<?=$url->applink('expose')?>" class="btn btn-default btn-lg">LunchBD</a>
+    <a href="<?=$url->applink('addmember')?>" class="btn btn-warning btn-lg">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </a>
-    <a href="/xenon/?app=memberlist" class="btn btn-primary btn-lg">
+    <a href="<?=$url->applink('memberlist')?>" class="btn btn-primary btn-lg">
         <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
     </a>
     <hr>

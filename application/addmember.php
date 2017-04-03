@@ -12,14 +12,14 @@
         $info = $_POST['info'];
 
         $checkExists = $db->query("SELECT mobileNumber FROM user WHERE mobileNumber = '$mobileNumber'");
-        //print_r($checkExists);
+
         if ($checkExists->num_rows > 0) {
             ?>
             <div class="alert alert-danger" role="alert">
                 <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                 <b>Error: </b>This member already been exists!
             </div>
-            <a href="/xenon/?app=addmember" class="btn btn-primary">TRY AGAIN</a>
+            <a href="<?=$url->applink('addmember')?>" class="btn btn-primary">TRY AGAIN</a>
             <?php
         } else {
             $db->query("INSERT INTO user (fullName, mobileNumber, email, address, mDate, recipe, deposit, info)
@@ -31,7 +31,7 @@
                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                 <b>Success: </b>A new member has been inserted successfully!
             </div>
-            <a href="/xenon/?app=addmember" class="btn btn-primary">ADD ANOTHER MEMBER</a>
+            <a href="<?=$url->applink('addmember')?>" class="btn btn-primary">ADD ANOTHER MEMBER</a>
 
             <?php
         }
