@@ -2,12 +2,16 @@
 include DIR_APPLICATION.'header.php';
 
 $page = isset($_GET['page'])?$_GET['page']:1;
-$limit = 50;
-$startPoint = ($page*$limit)-$limit;
-$endPoint = 1*$limit;
 
-$memeberCount = $db->query("SELECT '' FROM user");
-$memeberList = $db->query("SELECT * FROM user LIMIT $startPoint, $endPoint");
+
+$memberCount = $db->query("SELECT '' FROM user");
+$pagination->total = $memberCount->num_rows;
+$pagination->limit = 5;
+$pagination->page = $page;
+$pagination->url = $url->applink('memberlist', 'page={page}');
+
+$sqlLimit = $pagination->sqlLimit();
+$memberList = $db->query("SELECT * FROM user $sqlLimit");
 
 /*echo "<pre>";
 print_r($memeberList);
@@ -29,18 +33,18 @@ echo "</pre>";*/
         </thead>
         <tbody>
         <?php
-        $sl = $startPoint;
-        for ($i=0; $i<$memeberList->num_rows; $i++){
+        $sl = $pagination->getSqlLimitStart();
+        for ($i=0; $i<$memberList->num_rows; $i++){
             $sl++;
             ?>
             <tr>
                 <td><?=$sl?></td>
-                <td><?=$memeberList->rows[$i]['fullName']?></td>
-                <td><?=$memeberList->rows[$i]['mobileNumber']?></td>
-                <td><?=$memeberList->rows[$i]['email']?></td>
-                <td><?=$memeberList->rows[$i]['address']?></td>
-                <td><?=$memeberList->rows[$i]['recipe']?></td>
-                <td><?=$memeberList->rows[$i]['balance']?></td>
+                <td><?=$memberList->rows[$i]['fullName']?></td>
+                <td><?=$memberList->rows[$i]['mobileNumber']?></td>
+                <td><?=$memberList->rows[$i]['email']?></td>
+                <td><?=$memberList->rows[$i]['address']?></td>
+                <td><?=$memberList->rows[$i]['recipe']?></td>
+                <td><?=$memberList->rows[$i]['balance']?></td>
                 <td>Edit/delete</td>
             </tr>
             <?php
@@ -50,7 +54,7 @@ echo "</pre>";*/
     </table>
 <?php
 
-echo getPageList($memeberCount->num_rows, $limit, $page, $url->applink('memberlist', 'page={page}'));
+echo $pagination->render();
 
 include DIR_APPLICATION.'footer.php';
 ?>

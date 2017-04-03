@@ -1,19 +1,27 @@
 <?php
 class Pagination {
-	public $total = 0;
 	public $page = 1;
 	public $limit = 20;
+	public $total = 0;
 	public $num_links = 8;
 	public $url = '';
-	public $class_name = 'pagination';
-	public $active_class_name = 'active';
+	public $ulcssc = 'pagination';
+	public $licssc = 'active';
 	public $text_first = '|&lt;';
 	public $text_last = '&gt;|';
 	public $text_next = '&gt;';
 	public $text_prev = '&lt;';
 
-	public function render() {
-		$total = $this->total;
+    public function sqlLimit() {
+        return 'LIMIT '.(($this->page*$this->limit)-$this->limit).', '.(1*$this->limit);
+    }
+
+    public function getSqlLimitStart() {
+        return (($this->page*$this->limit)-$this->limit);
+    }
+
+    public function render() {
+        $total = $this->total;
         $limit = $this->limit;
         $num_links = $this->num_links;
         $num_pages = ceil($total / $limit);
@@ -28,7 +36,7 @@ class Pagination {
 
 		$this->url = str_replace('%7Bpage%7D', '{page}', $this->url);
 
-		$output = '<ul class="'.$this->class_name.'">';
+		$output = '<ul class="'.$this->ulcssc.'">';
 
 		if ($page > 1) {
             $output .= '<li><a href="' . str_replace('{page}', 1, $this->url) . '">' . $this->text_first . '</a></li>';
@@ -60,7 +68,7 @@ class Pagination {
 
 			for ($i = $start; $i <= $end; $i++) {
 				if ($page == $i) {
-					$output .= '<li class="'.$this->active_class_name.'"><span>' . $i . '</span></li>';
+					$output .= '<li class="'.$this->licssc.'"><span>' . $i . '</span></li>';
 				} else {
                     $output .= '<li><a href="' . str_replace('{page}', $i, $this->url) . '">' . $i . '</a></li>';
 				}
