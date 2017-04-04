@@ -36,6 +36,30 @@
             <?php
         }
     } else {
+        $fullName = '';
+        $mobileNumber = '';
+        $email = '';
+        $address = '';
+        $mDate = '';
+        $recipe = '';
+        $deposit = '';
+        $info = '';
+
+        if (isset($_GET['edit'])) {
+             $id = $_GET['edit'];
+             $pvalue = $db->query("SELECT * FROM user WHERE id='$id'");
+
+             if ($pvalue->num_rows > 0) {
+                 $fullName = $pvalue->row['fullName'];
+                 $mobileNumber = $pvalue->row['mobileNumber'];
+                 $email = $pvalue->row['email'];
+                 $address = $pvalue->row['address'];
+                 $mDate = $pvalue->row['mDate'];
+                 $recipe = $pvalue->row['recipe'];
+                 $deposit = $pvalue->row['deposit'];
+                 $info = $pvalue->row['info'];
+             }
+        }
         ?>
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -48,46 +72,46 @@
                         <tr>
                             <td><label for="fullName">Full Name</label></td>
                             <td> : </td>
-                            <td><input type="text" id="fullName" name="fullName" class="form-control" required></td>
+                            <td><input type="text" id="fullName" name="fullName" value="<?=$fullName?>" class="form-control" required></td>
                         </tr>
                         <tr>
                             <td><label for="mobileNumber">Contact Number</label></td>
                             <td> : </td>
-                            <td><input type="text" id="mobileNumber" name="mobileNumber" class="form-control" maxlength="11" required></td>
+                            <td><input type="text" id="mobileNumber" name="mobileNumber" value="<?=$mobileNumber?>" class="form-control" maxlength="11" required></td>
                         </tr>
                         <tr>
                             <td><label for="email">E-mail ID</label></td>
                             <td> : </td>
-                            <td><input type="text" id="email" name="email" class="form-control"></td>
+                            <td><input type="text" id="email" name="email" value="<?=$email?>" class="form-control"></td>
                         </tr>
                         <tr>
                             <td><label for="address">Address</label></td>
                             <td> : </td>
-                            <td><input type="text" id="address" name="address" class="form-control"></td>
+                            <td><input type="text" id="address" name="address" value="<?=$address?>" class="form-control"></td>
                         </tr>
                         <tr>
                             <td><label for="mDate">Membership Date</label></td>
                             <td> : </td>
-                            <td><input type="text" id="mDate" name="mDate" class="form-control"></td>
+                            <td><input type="text" id="mDate" name="mDate" value="<?=$mDate?>" class="form-control"></td>
                         </tr>
                         <tr>
                             <td><label for="recipe">Recipe</label></td>
                             <td> : </td>
-                            <td><input type="text" id="recipe" name="recipe" class="form-control"></td>
+                            <td><input type="text" id="recipe" name="recipe" value="<?=$recipe?>" class="form-control"></td>
                         </tr>
                         <tr>
                             <td><label for="deposit">Initial Deposit</label></td>
                             <td> : </td>
-                            <td><input type="number" id="deposit" name="deposit" class="form-control"></td>
+                            <td><input type="number" id="deposit" name="deposit" value="<?=$deposit?>" class="form-control"></td>
                         </tr>
                         <tr>
                             <td><label for="info">Organization/Dignity/Info</label></td>
                             <td> : </td>
-                            <td><input type="text" id="info" name="info" class="form-control"></td>
+                            <td><input type="text" id="info" name="info" value="<?=$info?>" class="form-control"></td>
                         </tr>
                         </tbody>
                     </table>
-                    <input type="submit" class="btn btn-primary" name="submit" value="Add Member">
+                    <input type="submit" class="btn btn-primary" name="submit" value="Submit">
                 </form>
             </div>
         </div>

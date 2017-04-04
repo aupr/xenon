@@ -3,19 +3,16 @@ include DIR_APPLICATION.'header.php';
 
 $page = isset($_GET['page'])?$_GET['page']:1;
 
-
+// Pagination section
 $memberCount = $db->query("SELECT '' FROM user");
 $pagination->total = $memberCount->num_rows;
 $pagination->limit = 5;
 $pagination->page = $page;
 $pagination->url = $url->applink('memberlist', 'page={page}');
 
+// Sql Data fetch
 $sqlLimit = $pagination->sqlLimit();
 $memberList = $db->query("SELECT * FROM user $sqlLimit");
-
-/*echo "<pre>";
-print_r($memeberList);
-echo "</pre>";*/
 
 ?>
     <table class="table table-bordered">
@@ -45,7 +42,11 @@ echo "</pre>";*/
                 <td><?=$memberList->rows[$i]['address']?></td>
                 <td><?=$memberList->rows[$i]['recipe']?></td>
                 <td><?=$memberList->rows[$i]['balance']?></td>
-                <td>Edit/delete</td>
+                <td>
+                    <a href="<?=$url->applink('addmember', 'edit='.$memberList->rows[$i]['id'])?>" class="btn btn-warning btn-xs">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    </a>
+                </td>
             </tr>
             <?php
         }
