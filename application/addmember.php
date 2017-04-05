@@ -11,29 +11,63 @@
         $deposit = $_POST['deposit'];
         $info = $_POST['info'];
 
-        $checkExists = $db->query("SELECT mobileNumber FROM user WHERE mobileNumber = '$mobileNumber'");
+        if (isset($_GET['edit'])) {
+            $id = $_GET['edit'];
+            $checkExists = $db->query("SELECT mobileNumber FROM user WHERE mobileNumber = '$mobileNumber' AND id != '$id'");
 
-        if ($checkExists->num_rows > 0) {
-            ?>
-            <div class="alert alert-danger" role="alert">
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                <b>Error: </b>This member already been exists!
-            </div>
-            <a href="<?=$url->applink('addmember')?>" class="btn btn-primary">TRY AGAIN</a>
-            <?php
+            if ($checkExists->num_rows > 0) {
+                ?>
+
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <b>Error: </b>The mobile number you given is already using by another one!
+                </div>
+
+                <a href="<?=$url->applink('addmember','edit='.$id)?>" class="btn btn-primary">TRY AGAIN</a>
+
+                <?php
+            } else {
+                $db->query("UPDATE user SET fullName='$fullName', mobileNumber='$mobileNumber', email='$email', address='$address', mDate='$mDate', recipe='$recipe', info='$info' WHERE id='$id'");
+                ?>
+
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    <b>Success: </b>Member information has been updated successfully!
+                </div>
+
+                <a href="<?=$url->applink('addmember','edit='.$id)?>" class="btn btn-primary">EDIT AGAIN</a>
+
+                <?php
+            }
         } else {
-            $db->query("INSERT INTO user (fullName, mobileNumber, email, address, mDate, recipe, deposit, info)
+            $checkExists = $db->query("SELECT mobileNumber FROM user WHERE mobileNumber = '$mobileNumber'");
+
+            if ($checkExists->num_rows > 0) {
+                ?>
+
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <b>Error: </b>This member already been exists!
+                </div>
+
+                <a href="<?=$url->applink('addmember')?>" class="btn btn-primary">TRY AGAIN</a>
+
+                <?php
+            } else {
+                $db->query("INSERT INTO user (fullName, mobileNumber, email, address, mDate, recipe, deposit, info)
                     VALUES ('$fullName', '$mobileNumber', '$email', '$address', '$mDate', '$recipe', '$deposit', '$info')");
 
-            ?>
+                ?>
 
-            <div class="alert alert-success" role="alert">
-                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                <b>Success: </b>A new member has been inserted successfully!
-            </div>
-            <a href="<?=$url->applink('addmember')?>" class="btn btn-primary">ADD ANOTHER MEMBER</a>
+                <div class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    <b>Success: </b>A new member has been inserted successfully!
+                </div>
 
-            <?php
+                <a href="<?=$url->applink('addmember')?>" class="btn btn-primary">ADD ANOTHER MEMBER</a>
+
+                <?php
+            }
         }
     } else {
         $fullName = '';
@@ -66,7 +100,7 @@
                 <h3 class="panel-title">ADD NEW MEMBER</h3>
             </div>
             <div class="panel-body">
-                <form action="" method="post">
+                <form action="" method="post" autocomplete="off">
                     <table class="table">
                         <tbody>
                         <tr>
@@ -99,7 +133,7 @@
                             <td> : </td>
                             <td><input type="text" id="recipe" name="recipe" value="<?=$recipe?>" class="form-control"></td>
                         </tr>
-                        <tr>
+                        <tr <?=isset($_GET['edit'])?'hidden':''?>>
                             <td><label for="deposit">Initial Deposit</label></td>
                             <td> : </td>
                             <td><input type="number" id="deposit" name="deposit" value="<?=$deposit?>" class="form-control"></td>

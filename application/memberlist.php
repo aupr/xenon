@@ -6,7 +6,7 @@ $page = isset($_GET['page'])?$_GET['page']:1;
 // Pagination section
 $memberCount = $db->query("SELECT '' FROM user");
 $pagination->total = $memberCount->num_rows;
-$pagination->limit = 5;
+$pagination->limit = 50;
 $pagination->page = $page;
 $pagination->url = $url->applink('memberlist', 'page={page}');
 

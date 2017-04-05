@@ -23,4 +23,7 @@
     <a href="<?=$url->applink('memberlist')?>" class="btn btn-primary btn-lg">
         <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
     </a>
+    <a href="<?=$url->applink('updatelunch')?>" class="btn btn-primary btn-lg">
+        UL
+    </a>
     <hr>
