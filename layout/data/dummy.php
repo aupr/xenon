@@ -1,3 +1,0 @@
-<?php
-
-// Data processing layout
