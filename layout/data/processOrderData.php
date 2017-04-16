@@ -10,6 +10,7 @@ function updateOrderData($day, $month, $year, $userId, $data) {
 
     $newOneDayExpense = $data['version_1']['price'] * $data['version_1']['unit'];
 
+    $rud = $edb->select('user', "expense", "WHERE id='$userId'");
     $rod = $edb->select('orders',"expense, d_$day", "WHERE reference='$userId' AND year='$year' AND month='$month'");
 
     if ($rod->num_rows > 0) {
@@ -26,8 +27,16 @@ function updateOrderData($day, $month, $year, $userId, $data) {
         );
 
         $edb->update('orders', $udt, "reference='$userId' AND year='$year' AND month='$month'");
-    } else {
 
+        // to update user total expense
+        $totalExpense = $rud->row['expense'] + ($newOneDayExpense - $OldOneDayExpense);
+
+        $tedt = array(
+            "expense"=>$totalExpense
+        );
+
+        $edb->updateById('user', $tedt, $userId);
+    } else {
 
         $udt = array(
             "d_$day"=>json_encode($data),
@@ -38,5 +47,14 @@ function updateOrderData($day, $month, $year, $userId, $data) {
         );
 
         echo $edb->insert('orders', $udt);
+
+        // to update user total expense
+        $totalExpense = $rud->row['expense'] + $newOneDayExpense;
+
+        $tedt = array(
+            "expense"=>$totalExpense
+        );
+
+        $edb->updateById('user', $tedt, $userId);
     }
 }

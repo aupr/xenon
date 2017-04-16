@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
                     <td><?=$value['fullName']?></td>
                     <td><?=$value['mobileNumber']?></td>
                     <td><?=$value['address']?></td>
-                    <td><?=$value['balance']?></td>
+                    <td><?=$value['deposit']-$value['expense']?></td>
                     <td>
                         <input type="number" name="price_<?=$value['id']?>" class="form-control" min="0" value="<?=isset($udt[$value['id']])?$udt[$value['id']]['version_1']['price']:'0'?>" max="200">
                     </td>

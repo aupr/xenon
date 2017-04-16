@@ -41,7 +41,7 @@ $memberList = $db->query("SELECT * FROM user $sqlLimit");
                 <td><?=$memberList->rows[$i]['email']?></td>
                 <td><?=$memberList->rows[$i]['address']?></td>
                 <td><?=$memberList->rows[$i]['recipe']?></td>
-                <td><?=$memberList->rows[$i]['balance']?></td>
+                <td><?=$memberList->rows[$i]['deposit']-$memberList->rows[$i]['expense']?></td>
                 <td>
                     <a href="<?=$url->applink('addmember', 'edit='.$memberList->rows[$i]['id'])?>" class="btn btn-warning btn-xs">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
