@@ -26,4 +26,7 @@
     <a href="<?=$url->applink('updatelunch')?>" class="btn btn-primary btn-lg">
         UL
     </a>
+    <a href="<?=$url->applink('findmember')?>" class="btn btn-primary btn-lg">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    </a>
     <hr>

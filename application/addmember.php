@@ -27,7 +27,18 @@
 
                 <?php
             } else {
-                $db->query("UPDATE user SET fullName='$fullName', mobileNumber='$mobileNumber', email='$email', address='$address', mDate='$mDate', recipe='$recipe', info='$info' WHERE id='$id'");
+
+
+                $edb->updateById("user", array(
+                    'fullName'=>$fullName,
+                    'mobileNumber'=>$mobileNumber,
+                    'email'=>$email,
+                    'address'=>$address,
+                    'mDate'=>$mDate,
+                    'recipe'=>$recipe,
+                    'info'=>$info
+                ), $id);
+
                 ?>
 
                 <div class="alert alert-success" role="alert">
@@ -54,8 +65,17 @@
 
                 <?php
             } else {
-                $db->query("INSERT INTO user (fullName, mobileNumber, email, address, mDate, recipe, deposit, info)
-                    VALUES ('$fullName', '$mobileNumber', '$email', '$address', '$mDate', '$recipe', '$deposit', '$info')");
+
+                $edb->insert("user", array(
+                    'fullName'=>$fullName,
+                    'mobileNumber'=>$mobileNumber,
+                    'email'=>$email,
+                    'address'=>$address,
+                    'mDate'=>$mDate,
+                    'recipe'=>$recipe,
+                    'deposit'=>$deposit,
+                    'info'=>$info
+                ));
 
                 ?>
 

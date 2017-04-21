@@ -86,6 +86,7 @@ if (isset($_POST['submit'])) {
             </tbody>
         </table>
         <input type="submit" name="submit" class="btn btn-primary" value="UPDATE">
+        <hr>
     </form>
     <?php
 }
